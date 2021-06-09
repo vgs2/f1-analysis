@@ -1,11 +1,10 @@
-import numpy as np
 import pandas as pd 
 import streamlit as st
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 
 
+@st.cache
 def load_datasets():
     # CARREGANDO OS DATASETS (EXTRACT)
     PATH = '../database/csv/'
@@ -34,9 +33,36 @@ def load_datasets():
 
     return results
 def get_n_most_drivers(query_str,df,n=10):
-    return df.query(query_str).groupby('name').count().sort_values(by='resultId',ascending=False).nlargest(n,'resultId').reset_index().iloc[:,:2]
-results = load_datasets()
-query = get_n_most_drivers('positionOrder == 1 & nationality == "Brazilian"',results)
-fig, ax = plt.subplots()
-ax.barh(query['name'],query['resultId'])
-st.write(fig)
+    return df.query(query_str).groupby('name').count().reset_index().sort_values(by='resultId',ascending=True).nlargest(n,'resultId').iloc[:,:2]
+
+
+def load_markdown(arq):
+    text = ''
+    with open(arq,'r') as f:
+        text = f.read()
+    return text
+
+def main():
+    opcoes = ('Página principal','Construtores','Corredores','Grand Prixes')
+    results = load_datasets()
+    selecao = st.sidebar.selectbox('Selecione uma opção',opcoes)
+    if selecao == 'Página principal':
+        st.markdown(load_markdown('tela_principal.md'),unsafe_allow_html=True)
+    elif selecao == 'Corredores':
+
+        st.write('Corredores com mais pódios')
+        query = get_n_most_drivers('positionOrder == 1',results)
+        fig, ax = plt.subplots()
+        ax.barh(query['name'],query['resultId'])
+        st.write(fig)
+
+        st.write('Corredores brasileiros com mais pódios')
+        query = get_n_most_drivers('positionOrder == 1 & nationality == "Brazilian"',results)
+        fig, ax = plt.subplots()
+        ax.barh(query['name'],query['resultId'])
+        st.write(fig)
+
+
+        
+if __name__ == '__main__':
+    main()
