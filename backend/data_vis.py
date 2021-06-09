@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 @st.cache
 def load_datasets():
     # CARREGANDO OS DATASETS (EXTRACT)
-    PATH = '../database/csv/'
+    PATH = 'database/csv/'
     results = pd.read_csv(PATH+'results.csv')
     status = pd.read_csv(PATH+'status.csv')
     races = pd.read_csv(PATH+'races.csv')
