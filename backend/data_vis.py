@@ -43,6 +43,7 @@ def load_markdown(arq):
     return text
 
 def main():
+    st.set_page_config('Data Power',🧙)
     opcoes = ('Página principal','Construtores','Corredores','Grand Prixes')
     results = load_datasets()
     selecao = st.sidebar.selectbox('Selecione uma opção',opcoes)
