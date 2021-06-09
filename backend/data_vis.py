@@ -47,7 +47,7 @@ def main():
     results = load_datasets()
     selecao = st.sidebar.selectbox('Selecione uma opção',opcoes)
     if selecao == 'Página principal':
-        st.markdown(load_markdown('tela_principal.md'),unsafe_allow_html=True)
+        st.markdown(load_markdown('backend/tela_principal.md'),unsafe_allow_html=True)
     elif selecao == 'Corredores':
 
         st.write('Corredores com mais pódios')
