@@ -11,7 +11,7 @@ services:
       - POSTGRES_DB=postgres
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - ./csv:/database
+      - ./csv:/csv
       # - ./relational_create_table.sql:/docker-entrypoint-initdb.d/init2.sql
       # - ./relational_populate_tables.sql:/docker-entrypoint-initdb.d/init3.sql
       # - ./dimensional_populate_tables.sql:/docker-entrypoint-initdb.d/init4.sql
