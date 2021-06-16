@@ -87,8 +87,10 @@ def create_dw():
     fact_table['volta_mais_rapida'] = pd.to_datetime(fact_table.fastestLapTime).dt.time
     fact_table['maior_velocidade'] = fact_table.fastestLapSpeed.astype('float')
     fact_table['tempo_corrida'] = fact_table.milliseconds.astype('int')
+    fact_table.drop(['fastestLapTime','fastestLapSpeed','milliseconds'],axis=1,inplace=True)
+
     fact_table.rename(columns={'driverId':'id_piloto','circuitId':'id_circuito','constructorId':'id_construtor',
-    'position_ql':'posicao_qualify','positionOrder':'posicao_corrida','points':'pontos','laps':'numer_voltas'},inplace=True)
+    'position_ql':'posicao_qualify','positionOrder':'posicao_corrida','points':'pontos','laps':'numero_voltas'},inplace=True)
     
     fact_table.to_csv('FATO_corrida.csv',index=False)
     dim_circuito.to_csv('DIM_circuito.csv',index=False)
@@ -157,13 +159,16 @@ def main():
     elif selecao == 'Construtores':
         constructor_data = fact_table.merge(dim_construtor,on='id_construtor')
         # PLOT DE MAIOR VELOCIDADE
-        grouped_constructor = constructor_data.groupby('nome_construtor').agg({'maior_velocidade':np.max}).sort_values(by='maior_velocidade',ascending=False)
-        grouped_constructor = grouped_constructor[grouped_constructor.maior_velocidade != -1]
-        fig,ax = plt.subplots()
-        ax = sns.barplot(y=grouped_constructor.index,x='maior_velocidade',data=grouped_constructor,palette='dark')
-        ax.set(xlabel='Maior velocidade (Km/h)',ylabel='Construtores')
-        ax.set_title('Maiores velocidades totais por construtor')
-        st.write(fig)
+        with st.echo(code_location='below'):
+            grouped_constructor = constructor_data.groupby('nome_construtor').agg({'maior_velocidade':np.max}).sort_values(by='maior_velocidade',ascending=False)
+            grouped_constructor = grouped_constructor[grouped_constructor.maior_velocidade != -1]
+            fig,ax = plt.subplots()
+            ax = sns.barplot(y=grouped_constructor.index,x='maior_velocidade',data=grouped_constructor,palette='dark')
+            ax.set(xlabel='Maior velocidade (Km/h)',ylabel='Construtores')
+            ax.set_title('Maiores velocidades totais por construtor')
+            
+            st.write(fig)
+        
 
         # EVOLUÇÃO DAS VELOCIDADES POR CONSTRUTORES
         constructor_data_time = constructor_data.merge(dim_tempo,on='id_tempo')
@@ -197,6 +202,6 @@ def main():
 
         
 if __name__ == '__main__':
-    #create_dw()
-    main()
+        create_dw()
+    #main()
            
