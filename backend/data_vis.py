@@ -176,16 +176,23 @@ def main():
         plt.xticks(rotation=45)
         ax.set(xlabel='Maior velocidade (Km/h)',ylabel='Construtora')
         ax.set_title(f'Evolução de velocidade pela equipe {equipe} pelo tempo')
-        st.write(fig)
-        st.write(grouped_time_constructor)
+        st.pyplot(fig)
+        # CONSTRUTORES GANHADORES POR ANO
+
+        grouped_points = constructor_data_time.groupby(['ano','nome_construtor']).agg({'pontos':np.sum}).reset_index().sort_values(by=['ano','pontos'],ascending=[True,False])
+        winner_year = grouped_points.loc[grouped_points.groupby('ano')['pontos'].idxmax()]
+        winner_year = winner_year[winner_year.ano > 1958]
+        winner_times = winner_year.groupby('nome_construtor').agg({'ano':'count'}).rename(columns={'ano':'Quantidade_campeonatos'}).sort_values(by='Quantidade_campeonatos',ascending=False).reset_index()
+
+        st.table(winner_year)
 
     elif selecao == 'Mapa':
         pass
-        #st.markdown('# Localização dos Autódromos pelo mundo')
-        #data = results[['lat','lon','nome_circuito']]
-        #data = data.drop_duplicates()
+        st.markdown('# Localização dos Autódromos pelo mundo')
+        data = dim_circuito[['latitude','longitude','nome_circuito']].rename(columns={'latitude':'lat','longitude':'lon'})
+        data = data.drop_duplicates()
         
-        #plot_map(data)
+        plot_map(data)
 
 
         
