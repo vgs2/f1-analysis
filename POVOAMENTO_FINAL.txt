@@ -1,0 +1,195 @@
+create table construtor(
+    id_construtor int PRIMARY KEY,
+    nome_construtor varchar(30)
+   );
+
+create table fabricante(
+    id_fabricante int primary key,
+    nome_fabricante varchar(30)
+);
+
+create table piloto(
+    id_piloto int primary key,
+    nome_piloto varchar(30)
+);
+
+create table circuito(
+    id_circuito int PRIMARY KEY,
+    nome_circuito varchar(30)
+);
+
+create table colocacao(
+    colocacao int PRIMARY KEY,
+    pontuacao int,
+    podio char check (podio in (0,1,2,3))
+  );
+
+create table fabricante_construtor(
+    id_fabricante int REFERENCES fabricante,
+    id_construtor int REFERENCES construtor,
+    temporada_1 int,
+    PRIMARY KEY (id_construtor, temporada_1)
+);
+
+CREATE TABLE construtor_piloto(
+    id_piloto int REFERENCES piloto,
+    id_construtor int REFERENCES construtor,
+    temporada int,
+    PRIMARY KEY (temporada, id_piloto, id_construtor)    
+);
+
+create table gp(
+    id_gp int primary key,
+    id_circuito int REFERENCES circuito,
+    temporada int
+);
+
+CREATE TABLE classificatoria(
+    id_piloto int REFERENCES piloto,
+    id_gp int REFERENCES gp,
+    posicao int,
+    PRIMARY KEY (id_piloto, id_gp)
+);
+
+create table resultado(
+    id_piloto int REFERENCES piloto,
+    colocacao int REFERENCES colocacao,
+    id_gp int REFERENCES gp,
+    volta_mais_rapida int,
+    ponto_extra int,
+    PRIMARY KEY (id_piloto,id_gp)
+);
+
+
+
+
+INSERT INTO CONSTRUTOR (id_construtor,nome_construtor) VALUES (0001,'McLaren');
+INSERT INTO CONSTRUTOR (id_construtor,nome_construtor) VALUES (0002,'Ferrari');
+INSERT INTO CONSTRUTOR (id_construtor,nome_construtor) VALUES (0003,'Renault');
+INSERT INTO CONSTRUTOR (id_construtor,nome_construtor) VALUES (0004,'Benetton');
+INSERT INTO CONSTRUTOR (id_construtor,nome_construtor) VALUES (0005,'Williams');
+INSERT INTO CONSTRUTOR (id_construtor,nome_construtor) VALUES (0006,'Cooper');
+
+SELECT * FROM CONSTRUTOR;
+
+INSERT INTO FABRICANTE (id_fabricante,nome_fabricante) VALUES (11,'ford');
+INSERT INTO FABRICANTE (id_fabricante,nome_fabricante) VALUES (12,'ferrari');
+INSERT INTO FABRICANTE (id_fabricante,nome_fabricante) VALUES (13,'renault');
+
+SELECT * FROM FABRICANTE;
+
+INSERT INTO PILOTO (id_piloto,nome_piloto) VALUES (100,'HAMILTON');
+INSERT INTO PILOTO (id_piloto,nome_piloto) VALUES (101,'PIQUETJR');
+INSERT INTO PILOTO (id_piloto,nome_piloto) VALUES (102,'MASSA');
+INSERT INTO PILOTO (id_piloto,nome_piloto) VALUES (103,'BARRICHELLO');
+INSERT INTO PILOTO (id_piloto,nome_piloto) VALUES (104,'VETTEL');
+INSERT INTO PILOTO (id_piloto,nome_piloto) VALUES (105,'ALONSO');
+INSERT INTO PILOTO (id_piloto,nome_piloto) VALUES (106,'NAKAJIMA');
+INSERT INTO PILOTO (id_piloto,nome_piloto) VALUES (107,'DAVIDSON');
+INSERT INTO PILOTO (id_piloto,nome_piloto) VALUES (108,'YAMAMOTO');
+INSERT INTO PILOTO (id_piloto,nome_piloto) VALUES (109,'SCHUMACHER');
+INSERT INTO PILOTO (id_piloto,nome_piloto) VALUES (110,'MONTAGNY');
+INSERT INTO PILOTO (id_piloto,nome_piloto) VALUES (111,'WEBBER');
+
+SELECT * FROM PILOTO;
+
+INSERT INTO CIRCUITO (id_circuito,nome_circuito) VALUES (001,'Circuit de Monaco');
+INSERT INTO CIRCUITO (id_circuito,nome_circuito) VALUES (002,'Indianapolis Motor Speedway');
+INSERT INTO CIRCUITO (id_circuito,nome_circuito) VALUES (003,'Autodromo Nazionale di Monza');
+
+SELECT * FROM CIRCUITO;
+
+INSERT INTO COLOCACAO (colocacao,pontuacao,podio) VALUES (1,25,1);
+INSERT INTO COLOCACAO (colocacao,pontuacao,podio) VALUES (2,18,2);
+INSERT INTO COLOCACAO (colocacao,pontuacao,podio) VALUES (3,15,3);
+INSERT INTO COLOCACAO (colocacao,pontuacao,podio) VALUES (4,12,0);
+INSERT INTO COLOCACAO (colocacao,pontuacao,podio) VALUES (5,10,0);
+INSERT INTO COLOCACAO (colocacao,pontuacao,podio) VALUES (6,8,0);
+INSERT INTO COLOCACAO (colocacao,pontuacao,podio) VALUES (7,6,0);
+INSERT INTO COLOCACAO (colocacao,pontuacao,podio) VALUES (8,4,0);
+INSERT INTO COLOCACAO (colocacao,pontuacao,podio) VALUES (9,2,0);
+INSERT INTO COLOCACAO (colocacao,pontuacao,podio) VALUES (10,1,0);
+
+SELECT * FROM COLOCACAO;
+
+
+INSERT INTO FABRICANTE_CONSTRUTOR (id_fabricante,id_construtor,temporada_1) VALUES (11,0001,2016);
+INSERT INTO FABRICANTE_CONSTRUTOR (id_fabricante,id_construtor,temporada_1) VALUES (12,0002,2016);
+INSERT INTO FABRICANTE_CONSTRUTOR (id_fabricante,id_construtor,temporada_1) VALUES (13,0003,2016);
+INSERT INTO FABRICANTE_CONSTRUTOR (id_fabricante,id_construtor,temporada_1) VALUES (11,0004,2016);
+INSERT INTO FABRICANTE_CONSTRUTOR (id_fabricante,id_construtor,temporada_1) VALUES (12,0005,2016);
+INSERT INTO FABRICANTE_CONSTRUTOR (id_fabricante,id_construtor,temporada_1) VALUES (13,0006,2016);
+INSERT INTO FABRICANTE_CONSTRUTOR (id_fabricante,id_construtor,temporada_1) VALUES (11,0001,2016);
+INSERT INTO FABRICANTE_CONSTRUTOR (id_fabricante,id_construtor,temporada_1) VALUES (12,0002,2016);
+INSERT INTO FABRICANTE_CONSTRUTOR (id_fabricante,id_construtor,temporada_1) VALUES (13,0003,2016);
+INSERT INTO FABRICANTE_CONSTRUTOR (id_fabricante,id_construtor,temporada_1) VALUES (11,0004,2016);
+INSERT INTO FABRICANTE_CONSTRUTOR (id_fabricante,id_construtor,temporada_1) VALUES (12,0005,2016);
+INSERT INTO FABRICANTE_CONSTRUTOR (id_fabricante,id_construtor,temporada_1) VALUES (13,0006,2016);
+
+SELECT * FROM FABRICANTE;
+
+
+INSERT INTO CONSTRUTOR_PILOTO (id_piloto,id_construtor,temporada) VALUES (100,0001,2016);
+INSERT INTO CONSTRUTOR_PILOTO (id_piloto,id_construtor,temporada) VALUES (101,0002,2016);
+INSERT INTO CONSTRUTOR_PILOTO (id_piloto,id_construtor,temporada) VALUES (102,0003,2016);
+INSERT INTO CONSTRUTOR_PILOTO (id_piloto,id_construtor,temporada) VALUES (103,0004,2016);
+INSERT INTO CONSTRUTOR_PILOTO (id_piloto,id_construtor,temporada) VALUES (104,0005,2016);
+INSERT INTO CONSTRUTOR_PILOTO (id_piloto,id_construtor,temporada) VALUES (105,0006,2016);
+INSERT INTO CONSTRUTOR_PILOTO (id_piloto,id_construtor,temporada) VALUES (106,0001,2016);
+INSERT INTO CONSTRUTOR_PILOTO (id_piloto,id_construtor,temporada) VALUES (107,0002,2016);
+INSERT INTO CONSTRUTOR_PILOTO (id_piloto,id_construtor,temporada) VALUES (108,0003,2016);
+INSERT INTO CONSTRUTOR_PILOTO (id_piloto,id_construtor,temporada) VALUES (109,0004,2016);
+INSERT INTO CONSTRUTOR_PILOTO (id_piloto,id_construtor,temporada) VALUES (110,0005,2016);
+INSERT INTO CONSTRUTOR_PILOTO (id_piloto,id_construtor,temporada) VALUES (111,0006,2016);
+
+SELECT * FROM CONSTRUTOR_PILOTO;
+
+INSERT INTO GP (id_gp,id_circuito,temporada) VALUES (11,001,2016);
+INSERT INTO GP (id_gp,id_circuito,temporada) VALUES (12,002,2016);
+INSERT INTO GP (id_gp,id_circuito,temporada) VALUES (13,003,2016);
+INSERT INTO GP (id_gp,id_circuito,temporada) VALUES (14,001,2016);
+INSERT INTO GP (id_gp,id_circuito,temporada) VALUES (15,002,2016);
+INSERT INTO GP (id_gp,id_circuito,temporada) VALUES (16,003,2016);
+INSERT INTO GP (id_gp,id_circuito,temporada) VALUES (17,001,2016);
+INSERT INTO GP (id_gp,id_circuito,temporada) VALUES (18,002,2016);
+INSERT INTO GP (id_gp,id_circuito,temporada) VALUES (19,003,2016);
+INSERT INTO GP (id_gp,id_circuito,temporada) VALUES (20,001,2016);
+INSERT INTO GP (id_gp,id_circuito,temporada) VALUES (21,002,2016);
+INSERT INTO GP (id_gp,id_circuito,temporada) VALUES (22,003,2016);
+
+SELECT * FROM GP;
+
+INSERT INTO CLASSIFICATORIA (id_piloto,id_gp,posicao) VALUES (100,11,1);
+INSERT INTO CLASSIFICATORIA (id_piloto,id_gp,posicao) VALUES (101,12,2);
+INSERT INTO CLASSIFICATORIA (id_piloto,id_gp,posicao) VALUES (102,13,3);
+INSERT INTO CLASSIFICATORIA (id_piloto,id_gp,posicao) VALUES (103,14,4);
+INSERT INTO CLASSIFICATORIA (id_piloto,id_gp,posicao) VALUES (104,15,5);
+INSERT INTO CLASSIFICATORIA (id_piloto,id_gp,posicao) VALUES (105,16,6);
+INSERT INTO CLASSIFICATORIA (id_piloto,id_gp,posicao) VALUES (106,17,7);
+INSERT INTO CLASSIFICATORIA (id_piloto,id_gp,posicao) VALUES (107,18,8);
+INSERT INTO CLASSIFICATORIA (id_piloto,id_gp,posicao) VALUES (108,19,9);
+INSERT INTO CLASSIFICATORIA (id_piloto,id_gp,posicao) VALUES (109,20,10);
+INSERT INTO CLASSIFICATORIA (id_piloto,id_gp,posicao) VALUES (110,21,11);
+INSERT INTO CLASSIFICATORIA (id_piloto,id_gp,posicao) VALUES (111,22,12);
+
+SELECT * FROM CLASSIFICATORIA;
+
+
+INSERT INTO RESULTADO (id_piloto,colocacao,id_gp,volta_mais_rapida,ponto_extra) VALUES (100,1,11,1,0); 
+INSERT INTO RESULTADO (id_piloto,colocacao,id_gp,volta_mais_rapida,ponto_extra) VALUES (101,2,12,2,0); 
+INSERT INTO RESULTADO (id_piloto,colocacao,id_gp,volta_mais_rapida,ponto_extra) VALUES (102,3,13,3,0); 
+INSERT INTO RESULTADO (id_piloto,colocacao,id_gp,volta_mais_rapida,ponto_extra) VALUES (103,4,14,4,0); 
+INSERT INTO RESULTADO (id_piloto,colocacao,id_gp,volta_mais_rapida,ponto_extra) VALUES (104,5,15,5,0); 
+INSERT INTO RESULTADO (id_piloto,colocacao,id_gp,volta_mais_rapida,ponto_extra) VALUES (105,6,16,6,0); 
+INSERT INTO RESULTADO (id_piloto,colocacao,id_gp,volta_mais_rapida,ponto_extra) VALUES (106,7,11,1,0); 
+INSERT INTO RESULTADO (id_piloto,colocacao,id_gp,volta_mais_rapida,ponto_extra) VALUES (107,8,12,2,0); 
+INSERT INTO RESULTADO (id_piloto,colocacao,id_gp,volta_mais_rapida,ponto_extra) VALUES (108,9,13,3,0); 
+INSERT INTO RESULTADO (id_piloto,colocacao,id_gp,volta_mais_rapida,ponto_extra) VALUES (109,10,14,4,0); 
+INSERT INTO RESULTADO (id_piloto,colocacao,id_gp,volta_mais_rapida,ponto_extra) VALUES (110,11,15,5,0); 
+INSERT INTO RESULTADO (id_piloto,colocacao,id_gp,volta_mais_rapida,ponto_extra) VALUES (111,12,16,6,0);
+
+SELECT * FROM RESULTADO;
+
+
+
+
