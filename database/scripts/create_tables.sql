@@ -1,64 +1,104 @@
-create table construtor(
-    id_construtor int PRIMARY KEY,
-    ref_construtor varchar(20),
-    nome_construtor varchar(30),
-    nacionalidade varchar(20),
-    url1 varchar(100)
-);
+create table constructors(
+    constructorId int PRIMARY KEY,
+    constructorRef varchar(20),
+    name varchar(30),
+    nationality varchar(30),
+    url varchar(100),
+
+); 
 
 create table fabricante(
     id_fabricante int primary key,
     nome_fabricante varchar(30)
 );
 
-create table piloto(
-    id_piloto int primary key,
-    nome_piloto varchar(30)
+create table drivers(
+    driverId int primary key,
+    driverRef varchar(20),
+    number varchar(5),
+    code varchar(5),
+    forename varchar(30),
+    surname varchar(30),
+    dob date,
+    nationality varchar(30),
+    url varchar(100)
+    
 );
 
-create table circuito(
-    id_circuito int PRIMARY KEY,
-    nome_circuito varchar(30)
+create table circuits(
+    circuitId int PRIMARY KEY,
+    circuitRef varchar(20),
+    name varchar(20),
+    location varchar(20),
+    country varchar(20),
+    lat varchar(20),
+    lng varchar(20),
+    alt int,
+    url varchar(100)
 );
 
-create table colocacao(
-    colocacao int PRIMARY KEY,
-    pontuacao int,
-    podio boolean
-);
-
-create table fabricante_construtor(
-    id_fabricante int REFERENCES fabricante,
-    id_construtor int REFERENCES construtor,
-    temporada int,
-    PRIMARY KEY (id_construtor, temporada)
-);
-
-CREATE TABLE construtor_piloto(
-    id_piloto int REFERENCES piloto,
-    id_construtor int REFERENCES construtor,
-    temporada int,
-    PRIMARY KEY (temporada, id_piloto, id_construtor)    
-);
-
-create table gp(
-    id_gp int primary key,
-    id_circuito int REFERENCES circuito,
-    temporada int
-);
-
-CREATE TABLE classificatoria(
-    id_piloto int REFERENCES piloto,
-    id_gp int REFERENCES gp,
-    posicao int,
-    PRIMARY KEY (id_piloto, id_gp)
-);
+create table races(
+    raceId int primary key,
+    year int,
+    round int,
+    circuitId int REFERENCES circuits,
+    name varchar(30),
+    date varchar(20),
+    time varchar(20),
+    url varchar(100)
+)
 
 
-create table resultado(
-    id_piloto int REFERENCES piloto,
-    colocacao int REFERENCES colocacao,
-    id_gp int REFERENCES gp,
-    ponto_extra int,
-    PRIMARY KEY (id_piloto, id_gp)
+CREATE TABLE qualifying(
+    qualifyId int primary key,
+    raceId int REFERENCES races,
+    driverId int REFERENCES drivers,
+    constructorId int,
+    number varchar(5),
+    position varchar(5),
+    q1 varchar(20),
+    q2 varchar(20),
+    q3 varchar(20)
 );
+
+create table results
+(
+    resultId int primary key,
+    raceId int REFERENCES races,
+    driverId int REFERENCES drivers,
+    constructorId int REFERENCES constructors,
+    number int,
+    grid int,
+    position varchar,
+    positionText varchar(3),
+    positionOrder int,
+    points int,
+    laps int,
+    time varchar(10),
+    milliseconds varchar(20),
+    fastestLap varchar(20),
+    rank varchar(20),
+    fastestLapTime varchar(20),
+    fastestLapSpeed varchar(20),
+    statusId int
+);
+
+create table lap_times(
+    raceId int REFERENCES races,
+    driverId int,
+    lap,
+    position,
+    time,
+    milliseconds
+)
+
+create table pit_stops(
+    raceId int references races,
+    driverId int references drivers,
+    stop int,
+    lap int,
+    time varchar(20),
+    duration varchar(20),
+    milliseconds int
+
+)
