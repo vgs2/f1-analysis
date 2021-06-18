@@ -3,7 +3,7 @@ create table constructors(
     constructorRef varchar(20),
     name varchar(30),
     nationality varchar(30),
-    url varchar(100),
+    url varchar(100)
 
 ); 
 
@@ -28,8 +28,8 @@ create table drivers(
 create table circuits(
     circuitId int PRIMARY KEY,
     circuitRef varchar(20),
-    name varchar(20),
-    location varchar(20),
+    name varchar(50),
+    location varchar(30),
     country varchar(20),
     lat varchar(20),
     lng varchar(20),
@@ -46,7 +46,7 @@ create table races(
     date varchar(20),
     time varchar(20),
     url varchar(100)
-)
+);
 
 
 CREATE TABLE qualifying(
@@ -55,10 +55,10 @@ CREATE TABLE qualifying(
     driverId int REFERENCES drivers,
     constructorId int,
     number varchar(5),
-    position varchar(5),
-    q1 varchar(20),
-    q2 varchar(20),
-    q3 varchar(20)
+    position varchar(10),
+    q1 varchar(30),
+    q2 varchar(30),
+    q3 varchar(30)
 );
 
 create table results
@@ -67,17 +67,17 @@ create table results
     raceId int REFERENCES races,
     driverId int REFERENCES drivers,
     constructorId int REFERENCES constructors,
-    number int,
-    grid int,
-    position varchar,
+    number varchar(5),
+    grid varchar(5),
+    position varchar (5),
     positionText varchar(3),
     positionOrder int,
-    points int,
+    points float,
     laps int,
-    time varchar(10),
+    time varchar(20),
     milliseconds varchar(20),
     fastestLap varchar(20),
-    rank varchar(20),
+    rank varchar(5),
     fastestLapTime varchar(20),
     fastestLapSpeed varchar(20),
     statusId int
@@ -85,12 +85,12 @@ create table results
 
 create table lap_times(
     raceId int REFERENCES races,
-    driverId int,
-    lap,
-    position,
-    time,
-    milliseconds
-)
+    driverId int REFERENCES drivers,
+    lap int,
+    position int,
+    time varchar(20),
+    milliseconds int
+);
 
 create table pit_stops(
     raceId int references races,
@@ -101,4 +101,4 @@ create table pit_stops(
     duration varchar(20),
     milliseconds int
 
-)
+);
