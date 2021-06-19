@@ -1,4 +1,4 @@
-DROP TABLE FATO_CORRIDA;
+DROP TABLE IF EXISTS FATO_CORRIDA;
 
 -- DIMENSÃO DO PILOTO
 
@@ -18,7 +18,7 @@ CREATE TABLE dim_construtor(
 );
 -- DIMENSÃO DO TEMPO
 CREATE TABLE dim_tempo(
-    id_tempo INT PRIMARY KEY,
+    dataa date PRIMARY KEY,
     dia INT,
     mes INT,
     ano INT
