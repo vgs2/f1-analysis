@@ -34,9 +34,8 @@ CREATE TABLE dim_circuito(
 
 );
 
--- TABELA FATO
 CREATE TABLE fato_corrida(
-    id_corrida INT PRIMARY KEY,
+    id_resultado INT PRIMARY KEY,
     id_piloto INT,
     id_construtor INT,
     id_tempo INT,
@@ -54,6 +53,5 @@ CREATE TABLE fato_corrida(
     CONSTRAINT FK_CONSTRUTOR FOREIGN KEY (id_construtor) REFERENCES dim_construtor(id_construtor),
     CONSTRAINT FK_TEMPO FOREIGN KEY (id_tempo) REFERENCES dim_tempo(id_tempo),
     CONSTRAINT FK_CIRCUITO FOREIGN KEY (id_circuito) REFERENCES dim_circuito(id_circuito)
-      
     
 );

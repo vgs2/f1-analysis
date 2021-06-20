@@ -61,20 +61,6 @@ CREATE TABLE qualifying(
     q3 varchar(30)
 );
 
-
-SELECT r.resultId, r.driverId, r.raceId, r.constructorId, races.date,
-        q.position, r.position, r.points, r.laps, r.fastestLap,
-        r.fastestLapSpeed, r.time
-FROM results as r
-join qualifying as q on (r.raceId = q.raceId and r.driverId = q.driverId)
-join races on r.raceId = races.raceId
-
-
-SELECT resultId, COUNT(*), SUM(pit_stops.milliseconds)
-FROM results
-JOIN pit_stops ON (results.raceId = pit_stops.raceId and results.driverId=pit_stops.driverId)
-GROUP BY resultId;
-
 -- join races on results.raceId = races.raceId
 
 create table results
