@@ -18,7 +18,7 @@ CREATE TABLE dim_construtor(
 );
 -- DIMENSÃO DO TEMPO
 CREATE TABLE dim_tempo(
-    dataa date PRIMARY KEY,
+    id_tempo date PRIMARY KEY,
     dia INT,
     mes INT,
     ano INT
@@ -28,8 +28,8 @@ CREATE TABLE dim_circuito(
     id_circuito INT PRIMARY KEY,
     nome_circuito VARCHAR(255),
     pais_circuito VARCHAR(255),
-    latitude FLOAT,
-    longitude FLOAT,
+    latitude VARCHAR(30),
+    longitude VARCHAR(30),
     altitude FLOAT
 
 );
@@ -38,8 +38,9 @@ CREATE TABLE fato_corrida(
     id_resultado INT PRIMARY KEY,
     id_piloto INT,
     id_construtor INT,
-    id_tempo INT,
+    id_tempo date,
     id_circuito INT,
+    id_corrida INT, 
     posicao_qualify INT,
     posicao_corrida INT,
     pontos FLOAT, 
