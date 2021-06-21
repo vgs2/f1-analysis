@@ -1,0 +1,22 @@
+INSERT INTO dim_piloto
+SELECT driverId, (forename || ' ' || surname), date_part('year',dob), nationality
+FROM drivers;
+
+
+INSERT INTO dim_construtor
+SELECT constructorId,name, nationality 
+FROM constructors;
+
+
+INSERT INTO dim_tempo
+SELECT id_tempo, mes, dia, ano
+FROM  lap_times;
+
+
+INSERT INTO dim_circuito
+SELECT circuitId,name, country,lat,lng,alt
+FROM circuits;
+
+
+--INSERT INTO fato_corrida (VITOR)
+
